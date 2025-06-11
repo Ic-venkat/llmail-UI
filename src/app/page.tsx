@@ -43,7 +43,7 @@ export default function Home() {
       }}
       description="Melone.ai helps you monitor your job applications, interviews, rejections, assessments, and more — all in one place."
       ctaText="Start Tracking"
-      ctaHref="/signup"
+      ctaHref="/signin"
       bottomImage={{
         light: "https://www.launchuicomponents.com/app-light.png",
         dark: "https://www.launchuicomponents.com/app-dark.png",
