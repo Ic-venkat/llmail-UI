@@ -13,7 +13,7 @@ import Link from "next/link"
 import ModeToggle from "./darkModeToggle"
 // components/Navbar.tsx
 import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs';
-import { ThemeProvider } from "@/components/themeProvider"
+import { Button } from "@/components/ui/button";
 
 
 export default function Navbar() {
@@ -97,14 +97,19 @@ export default function Navbar() {
       </NavigationMenu>
     
       <div className="flex items-center gap-4">
-          <SignedOut>
-            <SignInButton mode="modal" />
-            <SignUpButton mode="modal" />
-          </SignedOut>
+      <SignedOut>
+        <SignInButton mode="modal">
+          <Button variant="ghost" asChild>
+            <span className="font-bold cursor-pointer">Sign In</span>
+          </Button>
+        </SignInButton>
+        <SignUpButton mode="modal">
+          <Button variant="ghost" asChild>
+            <span className="font-bold cursor-pointer">Sign Up</span>
+          </Button>
+        </SignUpButton>
+      </SignedOut>
 
-          <SignedIn>
-            <UserButton afterSignOutUrl="/" />
-          </SignedIn>
 
           <ModeToggle />
         </div>
