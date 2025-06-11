@@ -10,11 +10,12 @@ import {
 } from "@/components/ui/navigation-menu"
 import Link from "next/link"
 import Image from "next/image"
-import { cn } from "@/lib/utils"
+import ModeToggle from "./darkModeToggle"
 
 export default function Navbar() {
   return (
     <nav className="border-b bg-background py-4 px-6">
+      <div className="flex items-center justify-between">
       <NavigationMenu>
         <NavigationMenuList>
 
@@ -45,7 +46,7 @@ export default function Navbar() {
           <NavigationMenuItem>
           <NavigationMenuLink asChild>
               <Link
-                href="/"
+                href="/features"
                 className="px-4 py-2 text-sm font-medium hover:text-accent-foreground"
               >
                 Features
@@ -90,10 +91,11 @@ export default function Navbar() {
 
         </NavigationMenuList>
       </NavigationMenu>
+      {/* Mode toggle aligned right */}
+        <div className="flex justify-end mt-2">
+        <ModeToggle />
+        </div>
+    </div>
     </nav>
   )
-}
-
-function linkClass() {
-  return cn("block rounded-md p-3 hover:bg-accent hover:text-accent-foreground transition");
 }
