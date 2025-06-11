@@ -1,9 +1,15 @@
-import type { Metadata } from "next";
+import { type Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/themeProvider"
 import Navbar from "@/components/navBar"
 import { Footerdemo } from "@/components/ui/footer-section";
+import {
+  ClerkProvider
+} from '@clerk/nextjs'
+
+
+
 
 
 const geistSans = Geist({
@@ -18,7 +24,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LLMail",
+  title: "melone.ai",
   description: "Your job search made easy",
 };
 
@@ -28,20 +34,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <ThemeProvider
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+          <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
-            disableTransitionOnChange>
-          <Navbar />
-          {children}
-        </ThemeProvider>
-      </body>
-    <div className="flex flex-col min-h-screen">
-      <Footerdemo />
-    </div>
-    </html>
+            disableTransitionOnChange
+          >
+            {/* Navbar now includes Clerk buttons */}
+            <Navbar />
+            {children}
+          </ThemeProvider>
+
+          <div className="flex flex-col min-h-screen">
+            <Footerdemo />
+          </div>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

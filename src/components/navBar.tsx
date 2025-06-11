@@ -9,8 +9,12 @@ import {
   NavigationMenuLink,
 } from "@/components/ui/navigation-menu"
 import Link from "next/link"
-import Image from "next/image"
+// import Image from "next/image"
 import ModeToggle from "./darkModeToggle"
+// components/Navbar.tsx
+import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs';
+import { ThemeProvider } from "@/components/themeProvider"
+
 
 export default function Navbar() {
   return (
@@ -91,9 +95,18 @@ export default function Navbar() {
 
         </NavigationMenuList>
       </NavigationMenu>
-      {/* Mode toggle aligned right */}
-        <div className="flex justify-end mt-2">
-        <ModeToggle />
+    
+      <div className="flex items-center gap-4">
+          <SignedOut>
+            <SignInButton mode="modal" />
+            <SignUpButton mode="modal" />
+          </SignedOut>
+
+          <SignedIn>
+            <UserButton afterSignOutUrl="/" />
+          </SignedIn>
+
+          <ModeToggle />
         </div>
     </div>
     </nav>
