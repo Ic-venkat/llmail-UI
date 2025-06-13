@@ -6,7 +6,6 @@ import Navbar from "@/components/navBar";
 import { Footerdemo } from "@/components/ui/footer-section";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
-import AuthWrapper from "./AuthWrapper";
 
 
 const geistSans = Geist({
@@ -42,14 +41,12 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <AuthWrapper> 
               {/* Navbar now includes Clerk buttons */}
               <Navbar />
               {children}
               <div className="flex flex-col min-h-screen">
                 <Footerdemo />
               </div>
-            </AuthWrapper>
           </ThemeProvider>
         </body>
       </html>
