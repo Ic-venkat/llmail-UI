@@ -4,14 +4,10 @@ import "../globals.css";
 import { ThemeProvider } from "@/components/themeProvider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
-import {
-  SidebarInset,
-  SidebarProvider,
-} from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Separator } from "@/components/ui/separator";
-import { redirect } from "next/navigation";
-import { auth } from "@clerk/nextjs/server";
+import LayoutClientWrapper from "@/components/authLayourWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,7 +29,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
   return (
     <ClerkProvider
       appearance={{ baseTheme: dark }}
@@ -51,25 +46,25 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-              <SidebarProvider
-                    style={
-                      {
-                        "--sidebar-width": "calc(var(--spacing) * 72)",
-                        "--header-height": "calc(var(--spacing) * 12)",
-                      } as React.CSSProperties
-                    }
-                  >
-                <AppSidebar variant="inset" collapsible="icon" />
-                <SidebarInset>
-                      <Separator
-                        orientation="vertical"
-                        className="mr-2 data-[orientation=vertical]:h-4"
-                      />
-                    <main>
-                        {children}
-                    </main>
-                </SidebarInset>
-              </SidebarProvider>
+            <SidebarProvider
+              style={
+                {
+                  "--sidebar-width": "calc(var(--spacing) * 72)",
+                  "--header-height": "calc(var(--spacing) * 12)",
+                } as React.CSSProperties
+              }
+            >
+              <AppSidebar variant="inset" collapsible="icon" />
+              <SidebarInset>
+                <Separator
+                  orientation="vertical"
+                  className="mr-2 data-[orientation=vertical]:h-4"
+                />
+                <main>
+                  <LayoutClientWrapper>{children}</LayoutClientWrapper>
+                </main>
+              </SidebarInset>
+            </SidebarProvider>
           </ThemeProvider>
         </body>
       </html>

@@ -1,58 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-import { useRouter } from "next/navigation";
 import { useAuth, useUser } from "@clerk/nextjs";
 
 export function GmailPermissionGate() {
   const { getToken } = useAuth();
   const { user } = useUser();
-  const router = useRouter();
-
-  const [loading, setLoading] = useState(true);
-  const [accessGranted, setAccessGranted] = useState<boolean | null>(null);
-
-  useEffect(() => {
-    const checkGmailAccess = async () => {
-      try {
-        const token = await getToken();
-        const clerk_user_id = user?.id;
-
-        const res = await fetch(
-          `${process.env.FASTAPI_BACKEND_URL}/gmail-access-status?clerk_user_id=${encodeURIComponent(clerk_user_id ?? "")}`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        if (!res.ok) {
-          throw new Error(`Status check failed: ${res.status}`);
-        }
-
-        const data = await res.json();
-        if (data.access_granted) {
-          router.push("/dashboard"); // ✅ Redirect if access is valid
-        } else {
-          setAccessGranted(false); // ❌ Show "Connect Gmail" if access denied
-        }
-      } catch (error) {
-        console.error("❌ Failed to check Gmail access:", error);
-        setAccessGranted(false); // fallback to manual connection
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (user) {
-      checkGmailAccess();
-    }
-  }, [getToken, router, user]);
+  
 
   const handleConnectGmail = async () => {
     try {
@@ -85,9 +41,7 @@ export function GmailPermissionGate() {
     }
   };
 
-  if (loading || accessGranted === null) {
-    return <div className="min-h-screen flex items-center justify-center">Checking permissions...</div>;
-  }
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
